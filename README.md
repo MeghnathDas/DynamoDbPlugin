@@ -15,7 +15,7 @@ Dynamo DB plugin to access AWS dynamo DB
 - .Net Core
 - AWS SDK
 
-Hosted URL -> [https://www.nuget.org/packages/MeghnathDas](https://www.nuget.org/packages/MeghnathDas)
+Hosted URL -> [https://www.nuget.org/packages/MD.Core.DynamoDb](https://www.nuget.org/packages/MD.Core.DynamoDb)
 
 # Editor
 
