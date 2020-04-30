@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MD.Core.DynamoDb", "MD.Core.DynamoDb.csproj", "{B613BB0C-7E84-4CA8-8164-72422B69B66B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MD.Core.DynamoDb", "MD.Core.DynamoDbPlugin\MD.Core.DynamoDb.csproj", "{286801EC-177D-448D-832D-A4E2D610DE0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MD.DemoWebAppWithDynamoDb", "MD.DemoWebAppWithDynamoDb\MD.DemoWebAppWithDynamoDb.csproj", "{790152F1-145A-4939-9A9F-6E1F96C5DCE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B613BB0C-7E84-4CA8-8164-72422B69B66B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B613BB0C-7E84-4CA8-8164-72422B69B66B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B613BB0C-7E84-4CA8-8164-72422B69B66B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B613BB0C-7E84-4CA8-8164-72422B69B66B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{286801EC-177D-448D-832D-A4E2D610DE0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{286801EC-177D-448D-832D-A4E2D610DE0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{286801EC-177D-448D-832D-A4E2D610DE0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{286801EC-177D-448D-832D-A4E2D610DE0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{790152F1-145A-4939-9A9F-6E1F96C5DCE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{790152F1-145A-4939-9A9F-6E1F96C5DCE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{790152F1-145A-4939-9A9F-6E1F96C5DCE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{790152F1-145A-4939-9A9F-6E1F96C5DCE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
