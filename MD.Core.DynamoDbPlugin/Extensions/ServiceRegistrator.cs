@@ -16,9 +16,15 @@ namespace MD.Core.DynamoDb.Extensions.DependencyInjection
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddDefaultAWSOptions(
-                configuration.GetSection("AWS").Get<BasicAwsConfig>().GetAWSOptions()
-                );
+            try
+            {
+                var awsConf = configuration.GetSection("AWS").Get<BasicAwsConfig>();
+                services.AddDefaultAWSOptions(awsConf.GetAWSOptions());
+            }
+            catch (System.Exception)
+            {
+                throw new System.Exception("No valid DynamoDb configuraion found");
+            }
             services.AddAWSService<IAmazonDynamoDB>();
 
             return services;

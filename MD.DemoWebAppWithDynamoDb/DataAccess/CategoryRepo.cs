@@ -23,7 +23,7 @@ namespace MD.DemoWebAppWithDynamoDb.DataAccess
         {
             List<ScanCondition> conditions = new List<ScanCondition>();
             if (!string.IsNullOrWhiteSpace(id))
-                conditions.Add(new ScanCondition(nameof(NoteCategory.id), ScanOperator.Equal, id));
+                conditions.Add(new ScanCondition(nameof(NoteCategory.Id), ScanOperator.Equal, id));
 
             return _dbContext.ScanAsync<NoteCategory>(conditions).GetRemainingAsync().Result;
         }
@@ -32,7 +32,7 @@ namespace MD.DemoWebAppWithDynamoDb.DataAccess
             if (string.IsNullOrWhiteSpace(itemToAdd.Name))
                 throw new Exception($"{nameof(itemToAdd.Name)} must be provided");
 
-            itemToAdd.id = Guid.NewGuid().ToString();
+            itemToAdd.Id = Guid.NewGuid().ToString();
 
             _dbContext.SaveAsync<NoteCategory>(itemToAdd).Wait();
 
@@ -44,7 +44,7 @@ namespace MD.DemoWebAppWithDynamoDb.DataAccess
             if (!catgFound.Any())
                 throw new KeyNotFoundException("Item requested for modification not found");
 
-            itmToUpdate.id = id;
+            itmToUpdate.Id = id;
             _dbContext.SaveAsync<NoteCategory>(itmToUpdate).Wait();
         }
         public void RemoveItem(string id)

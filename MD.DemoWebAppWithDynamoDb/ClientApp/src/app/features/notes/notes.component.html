@@ -1,0 +1,22 @@
+<p *ngIf="!notes"><em>Loading...</em></p>
+
+<table class='table table-striped item-collection' aria-labelledby="tableLabel" *ngIf="notes">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Added On</th>
+      <th>Updated On</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let note of notes">
+      <td>{{ note.title }}</td>
+      <td>{{ note.body }}</td>
+      <td></td>
+      <td>{{ note.createdOn }}</td>
+      <td>{{ note.lastUpdatedOn }}</td>
+    </tr>
+  </tbody>
+</table>

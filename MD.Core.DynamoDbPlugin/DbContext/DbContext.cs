@@ -13,7 +13,7 @@ namespace MD.Core.DynamoDb
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Amazon.DynamoDBv2.DocumentModel;
+    using Microsoft.Extensions.Logging;
 
     public abstract class DbContext : DynamoDBContext, IDbContext
     {
@@ -29,7 +29,33 @@ namespace MD.Core.DynamoDb
             this._entityBuilder = new EntityBuilder();
             this._client = client;
         }
-        public bool EnsureCreated()
+        private readonly ILogger _logger;
+        public DbContext(IAmazonDynamoDB client, ILogger<DbContext> logger) : base(client)
+        {
+            this._entityBuilder = new EntityBuilder();
+            this._client = client;
+
+            _logger = logger;
+
+            EventHandler<DbContextActionMessage> writeLog = (sender, e) =>
+            {
+                switch (e.MessageType)
+                {
+                    case DbContextActionMessageType.Info:
+                        _logger.LogInformation(e.Text);
+                        break;
+                    case DbContextActionMessageType.Error:
+                        _logger.LogError(e.Text);
+                        break;
+                    case DbContextActionMessageType.Warning:
+                        _logger.LogWarning(e.Text);
+                        break;
+                }
+            };
+
+            OnMessaging = writeLog;
+        }
+        public bool EnsureTablesCreatedWithSeedData()
         {
             OnModelCreating(this._entityBuilder);
             if (_entityBuilder.TableSpecs == null || !_entityBuilder.TableSpecs.Any())
@@ -108,20 +134,17 @@ namespace MD.Core.DynamoDb
                     isTableAvailable = tableStatus.Table.TableStatus == "ACTIVE";
                 }
 
-                OnMessaging.Invoke(this,
-                    new DbContextActionMessage(
+                logMessage(
                         isTableAvailable ? $"Created table: {tblToCreate.tableName}"
                             : $"Unable to to create table: {tblToCreate.tableName}",
-                        isTableAvailable ? DbContextActionMessageType.Info : DbContextActionMessageType.Error)
+                        isTableAvailable ? DbContextActionMessageType.Info : DbContextActionMessageType.Error
                     );
             }
         }
 
         private void processSeedData(ICollection<IDataProcessor> seedDataProcessors)
         {
-            OnMessaging.Invoke(this,
-                    new DbContextActionMessage("Processing seed data", DbContextActionMessageType.Info)
-                );
+            logMessage("Processing seed data", DbContextActionMessageType.Info);
 
             bool isSuccess = false;
             string msg = string.Empty;
@@ -139,12 +162,16 @@ namespace MD.Core.DynamoDb
                 msg = ex.Message;
             }
 
-            OnMessaging.Invoke(this,
-                new DbContextActionMessage(
-                    isSuccess ? msg
-                        : $"Seed data processing error: {msg}",
-                    isSuccess ? DbContextActionMessageType.Info : DbContextActionMessageType.Error)
+            logMessage(
+                    isSuccess ? msg : $"Seed data processing error: {msg}",
+                    isSuccess ? DbContextActionMessageType.Info : DbContextActionMessageType.Error
                 );
+        }
+
+        private void logMessage(string msg, DbContextActionMessageType msgType)
+        {
+            if (OnMessaging != null)
+                OnMessaging.Invoke(this, new DbContextActionMessage(msg, msgType));
         }
     }
 }

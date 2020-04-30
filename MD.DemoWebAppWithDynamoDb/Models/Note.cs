@@ -12,11 +12,11 @@ namespace MD.DemoWebAppWithDynamoDb.Models
     public class Note
     {
         [DynamoDBHashKey]
-        public string id { get; set; }
+        public string Id { get; set; }
         public string Title { get; set; }
         public string Body { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime LastUpdatedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? LastUpdatedOn { get; set; }
         public string _CategoryId { get; set; }
 
         [DynamoDBIgnore]

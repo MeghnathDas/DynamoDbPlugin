@@ -1,0 +1,16 @@
+<p *ngIf="!categories"><em>Loading...</em></p>
+
+<table class='table table-striped item-collection' aria-labelledby="tableLabel" *ngIf="categories">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let catg of categories">
+      <td>{{ catg.name }}</td>
+      <td>{{ catg.description }}</td>
+    </tr>
+  </tbody>
+</table>

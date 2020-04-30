@@ -23,7 +23,7 @@ namespace MD.DemoWebAppWithDynamoDb.DataAccess
         {
             List<ScanCondition> conditions = new List<ScanCondition>();
             if (!string.IsNullOrWhiteSpace(id))
-                conditions.Add(new ScanCondition(nameof(Note.id), ScanOperator.Equal, id));
+                conditions.Add(new ScanCondition(nameof(Note.Id), ScanOperator.Equal, id));
 
             return _dbContext.ScanAsync<Note>(conditions).GetRemainingAsync().Result;
         }
@@ -33,15 +33,15 @@ namespace MD.DemoWebAppWithDynamoDb.DataAccess
                 throw new Exception($"Must provide value for {nameof(itmToAdd.Title).ToLower()}");
 
             List<ScanCondition> conditions = new List<ScanCondition> {
-                new ScanCondition(nameof(NoteCategory.id), ScanOperator.Equal, itmToAdd._CategoryId)
+                new ScanCondition(nameof(NoteCategory.Id), ScanOperator.Equal, itmToAdd._CategoryId)
             };
 
             var parentCatg = _dbContext.ScanAsync<NoteCategory>(conditions).GetRemainingAsync().Result;
 
-            if (parentCatg == null)
+            if (!parentCatg.Any())
                 throw new Exception("A valid category must be assigned");
 
-            itmToAdd.id = Guid.NewGuid().ToString();
+            itmToAdd.Id = Guid.NewGuid().ToString();
             itmToAdd.CreatedOn = DateTime.Now;
 
             _dbContext.SaveAsync<Note>(itmToAdd).Wait();
@@ -54,7 +54,7 @@ namespace MD.DemoWebAppWithDynamoDb.DataAccess
             if (!noteFound.Any())
                 throw new KeyNotFoundException("Item requested for modification not found");
 
-            noteToUpdate.id = id;
+            noteToUpdate.Id = id;
             noteToUpdate.LastUpdatedOn = DateTime.Now;
             _dbContext.SaveAsync<Note>(noteToUpdate).Wait();
         }

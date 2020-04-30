@@ -12,13 +12,13 @@ namespace MD.DemoWebAppWithDynamoDb.DataAccess
     using Amazon.DynamoDBv2;
     using Amazon.DynamoDBv2.DataModel;
     using MD.Core.DynamoDb;
+    using Microsoft.Extensions.Logging;
     using Models;
 
     public class AppDbContext : DbContext
     {
-        public AppDbContext(IAmazonDynamoDB dynamoDB) : base(dynamoDB)
-        {
-            this.EnsureCreated();
+        public AppDbContext(IAmazonDynamoDB dynamoDB, ILogger<DbContext> logger) : base(dynamoDB, logger)
+        {            
         }
         public override void OnModelCreating(EntityBuilder entityBuilder)
         {
@@ -36,11 +36,11 @@ namespace MD.DemoWebAppWithDynamoDb.DataAccess
         {
             data.AddRange(new NoteCategory[] {
                 new NoteCategory {
-                    id = "system_catg-important",
+                    Id = "system_catg-important",
                     Name = "Important"
                 },
                 new NoteCategory {
-                    id = "system_catg_daily_task",
+                    Id = "system_catg_daily_task",
                     Name = "Daily Task"
                 }
             });

@@ -12,6 +12,6 @@ namespace MD.Core.DynamoDb
     {
         event EventHandler<DbContextActionMessage> OnMessaging;
         IAmazonDynamoDB Client { get; }
-        bool EnsureCreated();
+        bool EnsureTablesCreatedWithSeedData();
     }
 }
