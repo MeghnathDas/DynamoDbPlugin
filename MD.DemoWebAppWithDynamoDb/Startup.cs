@@ -1,3 +1,7 @@
+using Amazon.DynamoDBv2;
+using MD.Core.DynamoDb;
+using MD.DemoWebAppWithDynamoDb.DataAccess;
+using MD.DemoWebAppWithDynamoDb.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -19,6 +23,7 @@ namespace MD.DemoWebAppWithDynamoDb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDataAccessServices(Configuration);
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

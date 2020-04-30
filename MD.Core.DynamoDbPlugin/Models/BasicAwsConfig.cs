@@ -7,7 +7,7 @@ namespace MD.Core.DynamoDb
 {
     using Amazon;
     using Amazon.Extensions.NETCore.Setup;
-    public class BasicAwsConfig
+    internal class BasicAwsConfig
     {
         public string Profile { get; set; }
         public string AccessKey { get; set; }

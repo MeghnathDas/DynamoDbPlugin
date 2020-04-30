@@ -2,7 +2,11 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+
 /.vs
-/bin
-/Properties/PublishProfiles
-/obj
+/MD.Core.DynamoDbPlugin/bin
+/MD.Core.DynamoDbPlugin/obj
+/MD.Core.DynamoDbPlugin/Properties/PublishProfiles
+/MD.DemoWebAppWithDynamoDb/bin
+/MD.DemoWebAppWithDynamoDb/obj
+/MD.DemoWebAppWithDynamoDb/Properties/PublishProfiles
