@@ -11,7 +11,9 @@ namespace MD.DemoWebAppWithDynamoDb.DataAccess
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
+    using MD.Core.DynamoDb.Helpers;
+    using Amazon.DynamoDBv2.Model;
+
     public class CategoryRepo: IRepo<NoteCategory>
     {
         private readonly AppDbContext _dbContext;
@@ -24,6 +26,18 @@ namespace MD.DemoWebAppWithDynamoDb.DataAccess
             List<ScanCondition> conditions = new List<ScanCondition>();
             if (!string.IsNullOrWhiteSpace(id))
                 conditions.Add(new ScanCondition(nameof(NoteCategory.Id), ScanOperator.Equal, id));
+
+            return _dbContext.ScanAsync<NoteCategory>(conditions).GetRemainingAsync().Result;
+        }
+        internal ICollection<NoteCategory> GetItems(IEnumerable<string> ids)
+        {
+            ids = ids.Where(id => !string.IsNullOrWhiteSpace(id)).Distinct();
+
+            List<ScanCondition> conditions = new List<ScanCondition>();
+            if (ids.Any())
+                conditions.Add(
+                        new ScanCondition(nameof(NoteCategory.Id), ScanOperator.In, ids.ToArray())
+                    );
 
             return _dbContext.ScanAsync<NoteCategory>(conditions).GetRemainingAsync().Result;
         }

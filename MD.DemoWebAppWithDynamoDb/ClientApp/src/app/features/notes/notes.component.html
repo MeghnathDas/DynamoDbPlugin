@@ -1,7 +1,7 @@
 <p *ngIf="!notes"><em>Loading...</em></p>
 <div class="btn-toolbar">
   <div class="btn-group">
-    <button class="btn btn-outline-primary" title="Add Note">
+    <button class="btn btn-outline-primary" title="Add Note" (click)="openAddNoteDiag()">
       <i class="fa fa-plus"></i>&nbsp;Add
     </button>
     <button class="btn btn-outline-info" title="Refresh" (click)="populateNoteCollection()">
@@ -14,13 +14,13 @@
   <div class="note-collection">
     <ng-container *ngFor="let note of notes">
       <div class="card bg-light" data-toggle="tooltip" [title]="getInfo(note)">
-        <!-- <div class="card-header">{{note.title}}</div> -->
         <div class="card-body">
           <h6 class="card-title">{{note.title}}</h6>
+          <span class="badge badge-info">{{note.category.name}}</span>
           <p class="card-text">
             {{note.body}}
           </p>
-          <button class="btn btn-outline-primary btn-sm" title="Edit">
+          <button class="btn btn-outline-primary btn-sm" title="Edit" (click)="openAddNoteDiag(note)">
             <i class="fa fa-pencil"></i>&nbsp;Edit
           </button>
           <button class="btn btn-outline-danger btn-sm" title="Remove" (click)="removeItem(note)">

@@ -11,9 +11,9 @@ namespace MD.Core.DynamoDb.Helpers
     using System.Linq;
     using System.Reflection;
     using System.Text;
-    internal static class TableInfoHelper
+    public static class TableInfoHelper
     {
-        public static DbTableInfo ToDbTableInfo(this Type type)
+        internal static DbTableInfo ToDbTableInfo(this Type type)
         {
             DbTableInfo tbl = new DbTableInfo();
             var tblAttr = type.GetCustomAttribute<DynamoDBTableAttribute>();

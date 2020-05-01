@@ -36,7 +36,7 @@ namespace MD.DemoWebAppWithDynamoDb.DataAccess
         {
             data.AddRange(new NoteCategory[] {
                 new NoteCategory {
-                    Id = "system_catg-important",
+                    Id = "system_catg_important",
                     Name = "Important"
                 },
                 new NoteCategory {

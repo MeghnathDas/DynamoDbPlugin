@@ -11,13 +11,14 @@ namespace MD.DemoWebAppWithDynamoDb.DataAccess
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     public class NoteRepo: IRepo<Note>
     {
         private readonly AppDbContext _dbContext;
-        public NoteRepo(AppDbContext dbContext)
+        private readonly IRepo<NoteCategory> _catgRepo;
+        public NoteRepo(AppDbContext dbContext, IRepo<NoteCategory> catgRepo)
         {
             this._dbContext = dbContext;
+            this._catgRepo = catgRepo;
         }
         public ICollection<Note> GetItems(string id)
         {
@@ -25,7 +26,16 @@ namespace MD.DemoWebAppWithDynamoDb.DataAccess
             if (!string.IsNullOrWhiteSpace(id))
                 conditions.Add(new ScanCondition(nameof(Note.Id), ScanOperator.Equal, id));
 
-            return _dbContext.ScanAsync<Note>(conditions).GetRemainingAsync().Result;
+            var notes = _dbContext.ScanAsync<Note>(conditions).GetRemainingAsync().Result;
+            var catgIds = notes.Select(note => note._CategoryId);
+            if (catgIds.Any())
+            {
+                var catgs = ((CategoryRepo)_catgRepo).GetItems(catgIds);
+                notes.ForEach(note =>
+                    note.Category = catgs.FirstOrDefault(catg => catg.Id.Equals(note._CategoryId))
+                );
+            }
+            return notes;
         }
         public Note AddItem(Note itmToAdd)
         {

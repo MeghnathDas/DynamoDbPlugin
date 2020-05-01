@@ -1,8 +1,11 @@
+import { Category } from './category.model';
+
 export interface Note {
     id: string;
     title: string;
     body: string;
     createdOn: string;
     lastUpdatedOn: string;
-    _categoryId: string;
+    _CategoryId: string;
+    category: Category;
 }

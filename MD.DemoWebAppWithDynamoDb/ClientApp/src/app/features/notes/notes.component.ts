@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Note } from '../models';
 import { NoteService } from '../services';
+import { AddNoteComponent } from './add-note/add-note.component';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-notes',
@@ -10,7 +12,8 @@ import { NoteService } from '../services';
 export class NotesComponent implements OnInit {
   notes: Note[];
 
-  constructor(private noteService: NoteService) {
+  constructor(private noteService: NoteService,
+    private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -30,5 +33,17 @@ export class NotesComponent implements OnInit {
   }
   removeItem(note: Note) {
     this.noteService.removeNote(note.id).subscribe(() => this.populateNoteCollection());
+  }
+  openAddNoteDiag(note: Note) {
+    const modalRef: NgbModalRef =
+      this.modalService.open(AddNoteComponent);
+    if (note) {
+      modalRef.componentInstance.note = note;
+    }
+    modalRef.result.then((result) => {
+      this.populateNoteCollection();
+    },
+      () => { }
+    );
   }
 }
