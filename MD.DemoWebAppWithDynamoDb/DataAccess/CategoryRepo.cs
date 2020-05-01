@@ -53,7 +53,7 @@ namespace MD.DemoWebAppWithDynamoDb.DataAccess
             if (!catgToDel.Any())
                 throw new KeyNotFoundException("Item requested for deletion not found");
 
-            _dbContext.DeleteAsync<NoteCategory>(catgToDel).Wait();
+            _dbContext.DeleteAsync<NoteCategory>(catgToDel.First()).Wait();
         }
     }
 }

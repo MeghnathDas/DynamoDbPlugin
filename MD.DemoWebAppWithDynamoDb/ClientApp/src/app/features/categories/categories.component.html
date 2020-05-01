@@ -1,16 +1,37 @@
 <p *ngIf="!categories"><em>Loading...</em></p>
 
-<table class='table table-striped item-collection' aria-labelledby="tableLabel" *ngIf="categories">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let catg of categories">
-      <td>{{ catg.name }}</td>
-      <td>{{ catg.description }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="btn-toolbar">
+  <div class="btn-group">
+    <button class="btn btn-outline-primary" title="Add Note">
+      <i class="fa fa-plus"></i>&nbsp;Add
+    </button>
+    <button class="btn btn-outline-info" title="Refresh" (click)="populateCategoryCollection()">
+      <i class="fa fa-refresh"></i>&nbsp;Refresh
+    </button>
+  </div>
+</div>
+
+<hr>
+<ng-container *ngIf="categories">
+  <div class="list-group">
+    <span class="list-group-item list-group-item-action active">
+      Available Categories
+    </span>
+    <ng-container *ngFor="let catg of categories">
+      <div class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ catg.name }}</h5>
+          <div class="btn-group">
+            <button class="btn btn-outline-primary" title="Edit">
+              <i class="fa fa-pencil"></i>
+            </button>
+            <button class="btn btn-outline-danger" title="Remove" (click)="removeItem(catg)">
+              <i class="fa fa-trash"></i>
+            </button>
+          </div>
+        </div>
+        <p class="mb-1">{{ catg.description }}</p>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>

@@ -55,6 +55,7 @@ namespace MD.DemoWebAppWithDynamoDb.DataAccess
                 throw new KeyNotFoundException("Item requested for modification not found");
 
             noteToUpdate.Id = id;
+            noteToUpdate.CreatedOn = noteFound.First().CreatedOn;
             noteToUpdate.LastUpdatedOn = DateTime.Now;
             _dbContext.SaveAsync<Note>(noteToUpdate).Wait();
         }
@@ -64,7 +65,7 @@ namespace MD.DemoWebAppWithDynamoDb.DataAccess
             if (!noteToDel.Any())
                 throw new KeyNotFoundException("Item requested for deletion not found");
 
-            _dbContext.DeleteAsync<Note>(noteToDel).Wait();
+            _dbContext.DeleteAsync<Note>(noteToDel.First()).Wait();
         }
     }
 }

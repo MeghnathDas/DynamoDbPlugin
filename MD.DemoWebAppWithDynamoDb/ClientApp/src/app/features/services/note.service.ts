@@ -6,15 +6,25 @@ import { Note, Category } from '../models';
 
 @Injectable()
 export class NoteService {
+    private basePath = environment.apiHost;
+    private notesPath = '/notes';
+    private catgsPath = '/categories';
 
     constructor(private httpc: HttpClient) {
     }
 
     getNotes(id: string): Observable<Note[]> {
-        return this.httpc.get<Note[]>(`${environment.apiHost}/notes`);
+        return this.httpc.get<Note[]>(this.basePath + this.notesPath);
     }
 
     getCategories(id: string): Observable<Category[]> {
-        return this.httpc.get<Category[]>(`${environment.apiHost}/categories`);
+        return this.httpc.get<Category[]>(this.basePath + this.catgsPath);
+    }
+
+    removeNote(id: string): Observable<any> {
+      return this.httpc.delete(this.basePath + this.notesPath + '/' + id);
+    }
+    removeCategory(id: string): Observable<any> {
+        return this.httpc.delete(this.basePath + this.catgsPath + '/' + id);
     }
 }

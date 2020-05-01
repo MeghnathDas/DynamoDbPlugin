@@ -14,6 +14,10 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
-.item-collection{
-  margin-top: 2rem;
+
+.btn {
+  font-size: small;
+}
+.btn-sm {
+  font-size: 0.60rem;
 }

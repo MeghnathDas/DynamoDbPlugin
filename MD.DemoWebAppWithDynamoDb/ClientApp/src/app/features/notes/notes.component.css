@@ -1,1 +1,24 @@
-
+.note-collection {
+    /* display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, max-content));
+    grid-gap: 8px; */
+    display: flex;
+    flex-wrap: wrap;   
+    transition: 0.3s;
+}
+.note-collection > * {
+    margin: 5px;
+}
+.card {
+    max-width: 20rem;
+    height: fit-content;  
+}
+.card-body .btn:not(:last-child) {
+    margin-right: 5px;
+}
+.card-header .card-footer {
+    padding: 0.50rem .75rem;
+}
+.card-text {
+    font-size: small;
+}
