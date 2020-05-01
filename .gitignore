@@ -10,3 +10,4 @@
 /MD.DemoWebAppWithDynamoDb/bin
 /MD.DemoWebAppWithDynamoDb/obj
 /MD.DemoWebAppWithDynamoDb/Properties/PublishProfiles
+/MD.DemoWebAppWithDynamoDb/appsettings.development.json
