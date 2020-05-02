@@ -9,7 +9,7 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
 RUN apt-get -y install nodejs
 
 #Install Make
-RUN sudo pacman -S make gcc
+RUN apk add g++ make python
 
 # Copy everything else and build
 COPY . ./
