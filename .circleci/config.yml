@@ -1,7 +1,7 @@
 jobs:
  build:
-   runs-on: ubuntu-latest
-   machine: true
+    runs-on: ubuntu-latest
+    machine: true
     steps:
      - checkout 
 
