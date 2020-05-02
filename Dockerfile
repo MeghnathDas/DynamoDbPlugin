@@ -5,7 +5,7 @@ WORKDIR /
 #Install nodejs
 RUN apt-get update \
     && apt-get upgrade -y \
-    && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
     && apt-get install -y nodejs \
     
 # Copy everything else and build
