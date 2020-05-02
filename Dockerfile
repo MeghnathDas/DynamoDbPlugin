@@ -8,16 +8,13 @@ RUN apt-get -y install curl gnupg
 RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
 RUN apt-get -y install nodejs
 
-#Install Make
-#RUN apk --no-cache add --virtual builds-deps build-base python
-
 # Copy everything else and build
 COPY . ./
 RUN dotnet publish -c Release -o out
 
 
 # Build runtime image
-FROM microsoft/dotnet:3.1-aspnetcore-runtime
+#FROM microsoft/dotnet:3.1-aspnetcore-runtime
 WORKDIR /
 COPY --from=build-env /out .
 CMD dotnet MD.DemoWebAppWithDynamoDb.dll
