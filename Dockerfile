@@ -7,7 +7,10 @@ RUN apt-get update
 RUN apt-get -y install curl gnupg
 RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
 RUN apt-get -y install nodejs
-    
+
+#Install Make
+RUN yum install -y make gcc*
+
 # Copy everything else and build
 COPY . ./
 RUN dotnet publish -c Release -o out
