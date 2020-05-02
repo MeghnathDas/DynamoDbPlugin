@@ -34,7 +34,8 @@ export class NotesComponent implements OnInit {
   removeItem(note: Note) {
     this.noteService.removeNote(note.id).subscribe(() => this.populateNoteCollection());
   }
-  openAddNoteDiag(note: Note) {
+  // tslint:disable-next-line:no-unnecessary-initializer
+  openAddNoteDiag(note: Note = undefined) {
     const modalRef: NgbModalRef =
       this.modalService.open(AddNoteComponent);
     if (note) {
