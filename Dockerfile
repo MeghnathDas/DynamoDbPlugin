@@ -9,7 +9,7 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
 RUN apt-get -y install nodejs
 
 #Install Make
-RUN apk --no-cache add --virtual builds-deps build-base python
+#RUN apk --no-cache add --virtual builds-deps build-base python
 
 # Copy everything else and build
 COPY . ./
