@@ -2,6 +2,12 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /
 
+#Install nodejs
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+    && apt-get install -y nodejs \
+    
 # Copy everything else and build
 COPY . ./
 RUN dotnet publish -c Release -o out
