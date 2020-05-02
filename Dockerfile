@@ -2,11 +2,8 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /app
 
-# Copy csproj and restore as distinct layers
-COPY . ./
-RUN dotnet restore
-
 # Copy everything else and build
+COPY LICENCE .
 COPY . ./
 RUN dotnet publish -c Release -o out
 
