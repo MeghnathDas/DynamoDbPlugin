@@ -14,7 +14,8 @@ RUN dotnet publish -c Release -o out
 
 
 # Build runtime image
-FROM microsoft/aspnetcore
+# FROM microsoft/aspnetcore
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1
 WORKDIR /app
 COPY --from=ms_dotnet_core_build /app/out ./
 CMD dotnet MD.DemoWebAppWithDynamoDb.dll
