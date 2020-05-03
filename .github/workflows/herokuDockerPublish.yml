@@ -9,27 +9,26 @@ on:
     tags:
       - v*
 jobs:
- build:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code from repo
       - uses: actions/checkout@v1
       - name: Set runner environment variables
       - uses: actions/heroku@master
-        env: 
+        env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}      
+          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
 
-     # build image
+      # build image
       - name: Build the Docker file and create image
+      - run: docker info
+            docker build . -t $HEROKU_APP_NAME -f Dockerfile
+
+      # deploy the image
       - run:
-         docker info
-         docker build . -t $HEROKU_APP_NAME -f Dockerfile
-        
-     # deploy the image
-      - run:
-         docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-         docker tag $HEROKU_APP_NAME registry.heroku.com/$HEROKU_APP_NAME/web
-         docker push registry.heroku.com/$HEROKU_APP_NAME/web                
-         curl https://cli-assets.heroku.com/install.sh | sh
-         heroku container:release web -a $HEROKU_APP_NAME
+          docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+          docker tag $HEROKU_APP_NAME registry.heroku.com/$HEROKU_APP_NAME/web
+          docker push registry.heroku.com/$HEROKU_APP_NAME/web
+          curl https://cli-assets.heroku.com/install.sh | sh
+          heroku container:release web -a $HEROKU_APP_NAME
