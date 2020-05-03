@@ -1,4 +1,5 @@
 name: MD-Notes-CI
+#Trigger
 on:
   push:
     # Publish `master` as Docker `latest` image.
@@ -8,27 +9,31 @@ on:
     # Publish `v1.2.3` tags as releases.
     tags:
       - v*
+# Environment variable setup
+env:
+  uses: actions/heroku@master
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+
 jobs:
-  build-md-notes-app:
-    continue-on-error: false
+  build-docker-image:
     runs-on: ubuntu-latest
     steps:
     # Checkout code
     - name: Checkout code repo
       uses: actions/checkout@v2
 
-    # Environment variable setup
-    - name: Setting runner environment variables
-      uses: actions/heroku@master
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+    # # Environment variable setup
+    # - name: Setting runner environment variables
+    #   uses: actions/heroku@master
+    #   env:
+    #     HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+    #     HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
 
     #Docker image building
     - name: Build Docker image
-      id: stepBdi
-      run: docker info
-            docker build . -t $HEROKU_APP_NAME -f Dockerfile
+      id: stepBdi      
+      run: docker build . --file Dockerfile --tag $HEROKU_APP_NAME
 
     #Pushing docker image
     - name: Heroku login and deploy image
