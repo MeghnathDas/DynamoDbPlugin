@@ -67,7 +67,7 @@ jobs:
       # if: steps.stepBdi.outputs.status == 'success'
       #docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
       run: |
-          echo | set /p="$HEROKU_API_KEY" | docker login --username=_ --password-stdin
+          echo | set /p=$HEROKU_API_KEY | docker login --username=_ --password-stdin
           docker tag $HEROKU_APP_NAME registry.heroku.com/$HEROKU_APP_NAME/web
           docker push registry.heroku.com/$HEROKU_APP_NAME/web
           curl https://cli-assets.heroku.com/install.sh | sh
