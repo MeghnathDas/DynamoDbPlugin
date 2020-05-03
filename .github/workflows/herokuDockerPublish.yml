@@ -25,16 +25,16 @@ jobs:
 
     #Docker image building
     - name: Build Docker image
+      id: stepBdi
       run: docker info
             docker build . -t $HEROKU_APP_NAME -f Dockerfile
-      continue-on-error: false
 
     #Pushing docker image
     - name: Heroku login and deploy image
+      if: steps.stepBdi.outputs.status == 'success'
       run:
           docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
           docker tag $HEROKU_APP_NAME registry.heroku.com/$HEROKU_APP_NAME/web
           docker push registry.heroku.com/$HEROKU_APP_NAME/web
           curl https://cli-assets.heroku.com/install.sh | sh
           heroku container:release web -a $HEROKU_APP_NAME
-      continue-on-error: false
