@@ -1,56 +1,57 @@
-# name: Docker
-# on:
-#   push:
-#     # Publish `master` as Docker `latest` image.
-#     branches:
-#       - master
-
-#     # Publish `v1.2.3` tags as releases.
-#     tags:
-#       - v*
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v1
-#       - name: Set runner environment variables
-#       - uses: actions/heroku@master
-#         env:
-#           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-#           HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
-
-#       # build image
-#       - run: docker info
-#             docker build . -t $HEROKU_APP_NAME -f Dockerfile
-
-#       # deploy the image
-#       - run:
-#           docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-#           docker tag $HEROKU_APP_NAME registry.heroku.com/$HEROKU_APP_NAME/web
-#           docker push registry.heroku.com/$HEROKU_APP_NAME/web
-#           curl https://cli-assets.heroku.com/install.sh | sh
-#           heroku container:release web -a $HEROKU_APP_NAME
 name: MD-Notes-CI
-
 on:
   push:
+    # Publish `master` as Docker `latest` image.
     branches:
-    - master
+      - master
 
+    # Publish `v1.2.3` tags as releases.
+    tags:
+      - v*
 jobs:
-  build_md_notes:
-    runs-on: ubuntu-16.04
+  build:
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Build and deploy the Docker image
-      env: 
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
-      run:
-        docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-        docker tag $HEROKU_APP_NAME registry.heroku.com/$HEROKU_APP_NAME/web
-        docker push registry.heroku.com/$HEROKU_APP_NAME/web
-        heroku container:push web -a $HEROKU_APP_NAME
-        curl https://cli-assets.heroku.com/install.sh | sh
-        heroku container:release web -a $HEROKU_APP_NAME
+      - name: Checkout repo
+      - uses: actions/checkout@v1
+      - uses: actions/heroku@master
+      # - name: Set runner environment variables
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+
+      # build image
+      - run: docker info
+            docker build . -t $HEROKU_APP_NAME -f Dockerfile
+
+      # deploy the image
+      - run:
+          docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+          docker tag $HEROKU_APP_NAME registry.heroku.com/$HEROKU_APP_NAME/web
+          docker push registry.heroku.com/$HEROKU_APP_NAME/web
+          curl https://cli-assets.heroku.com/install.sh | sh
+          heroku container:release web -a $HEROKU_APP_NAME
+# name: MD-Notes-CI
+
+# on:
+#   push:
+#     branches:
+#     - master
+
+# jobs:
+#   build_md_notes:
+#     runs-on: ubuntu-16.04
+#     steps:
+#     - uses: actions/checkout@v1
+#     - name: Build and deploy the Docker image
+#       env: 
+#         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+#         HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+#       run:
+#         docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+#         docker tag $HEROKU_APP_NAME registry.heroku.com/$HEROKU_APP_NAME/web
+#         docker push registry.heroku.com/$HEROKU_APP_NAME/web
+#         heroku container:push web -a $HEROKU_APP_NAME
+#         curl https://cli-assets.heroku.com/install.sh | sh
+#         heroku container:release web -a $HEROKU_APP_NAME
  
