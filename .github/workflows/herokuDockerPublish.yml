@@ -1,5 +1,4 @@
 name: Docker
-
 on:
   push:
     # Publish `master` as Docker `latest` image.
@@ -13,8 +12,9 @@ jobs:
  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Build and deploy the Docker image  
+      - uses: actions/checkout@v1
+      - name: Build and deploy the Docker image
+        uses: actions/heroku@master
         env: 
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}      
