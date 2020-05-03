@@ -1,5 +1,5 @@
 # NuGet restore
-FROM microsoft/aspnetcore-build AS build
+FROM microsoft/aspnetcore-build AS ms_dotnet_core_build
 WORKDIR /app
 
 #Install nodejs
@@ -17,5 +17,5 @@ RUN dotnet publish -c Release -o out
 # FROM mcr.microsoft.com/dotnet/core/aspnet:3.0 AS runtime
 FROM microsoft/aspnetcore
 WORKDIR /app
-COPY --from=build /app/out ./
+COPY --from=ms_dotnet_core_build /app/out ./
 CMD dotnet MD.DemoWebAppWithDynamoDb.dll
