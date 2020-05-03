@@ -61,7 +61,7 @@ jobs:
 
     #     docker tag image $IMAGE_ID:$VERSION
     #     docker push $IMAGE_ID:$VERSION
-    - run: echo $HEROKU_APP_NAME
+    # - run: echo $HEROKU_APP_NAME
     #Pushing docker image to heroku
     - name: Log into Heroku and deploy image
       # if: steps.stepBdi.outputs.status == 'success'
