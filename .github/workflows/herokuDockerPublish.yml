@@ -21,7 +21,6 @@ jobs:
           HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
 
       # build image
-      - name: Build the Docker file and create image
       - run: docker info
             docker build . -t $HEROKU_APP_NAME -f Dockerfile
 
