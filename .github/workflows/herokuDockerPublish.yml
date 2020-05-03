@@ -65,7 +65,7 @@ jobs:
 
     #Pushing docker image to heroku
     - name: Log into Heroku and deploy image
-      if: steps.stepBdi.outputs.status == 'success'
+      # if: steps.stepBdi.outputs.status == 'success'
       run:
           docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
           docker tag $HEROKU_APP_NAME registry.heroku.com/$HEROKU_APP_NAME/web
