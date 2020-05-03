@@ -8,16 +8,16 @@ on:
     # Publish `v1.2.3` tags as releases.
     tags:
       - v*
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Set runner environment variables
-      - uses: actions/heroku@master
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v1
+#       - name: Set runner environment variables
+#       - uses: actions/heroku@master
+#         env:
+#           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+#           HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
 
 #       # build image
 #       - run: docker info
