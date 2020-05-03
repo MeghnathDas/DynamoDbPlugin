@@ -1,10 +1,12 @@
 # NuGet restore
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
-WORKDIR /app
+WORKDIR /
 
-# Copy csproj and restore as distinct layers
-COPY *.csproj ./
-RUN dotnet restore
+#Install nodejs
+RUN apt-get update
+RUN apt-get -y install curl gnupg
+RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
+RUN apt-get -y install nodejs
 
 # Copy everything else and build
 COPY . ./
@@ -12,7 +14,7 @@ RUN dotnet publish -c Release -o out
 
 
 # Build runtime image
-FROM microsoft/dotnet:2.2-aspnetcore-runtime
-WORKDIR /app
-COPY --from=build-env /app/out .
+# FROM mcr.microsoft.com/dotnet/core/aspnet:3.0 AS runtime
+WORKDIR /
+COPY --from=build /out ./
 CMD dotnet MD.DemoWebAppWithDynamoDb.dll
