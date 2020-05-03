@@ -35,6 +35,9 @@ jobs:
       id: stepBdi      
       run: docker build . --file Dockerfile --tag $HEROKU_APP_NAME
 
+    - name: Log into github package registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
     #Pushing docker image
     - name: Heroku login and deploy image
       if: steps.stepBdi.outputs.status == 'success'
