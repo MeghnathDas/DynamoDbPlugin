@@ -1,5 +1,5 @@
 # NuGet restore
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+FROM microsoft/aspnetcore-build AS build
 WORKDIR /app
 
 #Install nodejs
