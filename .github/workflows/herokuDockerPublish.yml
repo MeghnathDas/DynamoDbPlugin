@@ -16,7 +16,7 @@ env:
   HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
 
 jobs:
-  build-docker-image:
+  build-and-publish-docker-image:
     runs-on: ubuntu-latest
     steps:
     # Checkout code
