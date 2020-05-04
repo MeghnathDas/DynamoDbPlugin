@@ -17,7 +17,7 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1
 WORKDIR /app
 COPY --from=ms_dotnet_core_build /app/out ./
-# CMD dotnet MD.DemoWebAppWithDynamoDb.dll
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet MD.Heroku-CD-Demo-With-Dotnetcore-Docker-App.dll
+CMD dotnet MD.Heroku-CD-Demo-With-Dotnetcore-Docker-App.dll
+# CMD ASPNETCORE_URLS=http://*:$PORT dotnet MD.Heroku-CD-Demo-With-Dotnetcore-Docker-App.dll
 # ENTRYPOINT ["dotnet", "MD.Heroku-CD-Demo-With-Dotnetcore-Docker-App.dll"]
 # CMD ["dotnet", "MD.Heroku-CD-Demo-With-Dotnetcore-Docker-App.dll"]
