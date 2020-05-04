@@ -18,8 +18,25 @@ namespace MD.Core.DynamoDb.Extensions.DependencyInjection
         {
             try
             {
-                var awsConf = configuration.GetSection("AWS").Get<BasicAwsConfig>();
-                services.AddDefaultAWSOptions(awsConf.GetAWSOptions());
+                var awsConf = configuration.GetSection("AWS")
+                    .Get<BasicAwsConfig>()
+                    .GetAWSOptions();
+
+                if (awsConf == null)
+                {
+                    var envConf = new BasicAwsConfig
+                    {
+                        Profile = configuration.GetValue<string>("AWS_PROFILE"),
+                        AccessKey = configuration.GetValue<string>("AWS_ACCESS_KEY_ID"),
+                        SecretKey = configuration.GetValue<string>("AWS_SECRET_ACCESS_KEY"),
+                        Region = configuration.GetValue<string>("AWS_REGION")
+                    };
+                    awsConf = envConf.GetAWSOptions();
+                }
+                if (awsConf == null)
+                    throw new System.Exception();
+
+                services.AddDefaultAWSOptions(awsConf);
             }
             catch (System.Exception)
             {
