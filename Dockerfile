@@ -12,6 +12,7 @@ RUN apt-get -y install nodejs
 COPY . ./
 RUN dotnet publish -c Release -o out
 
+
 # Build runtime image
 # FROM microsoft/aspnetcore
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1
