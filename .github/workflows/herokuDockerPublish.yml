@@ -62,14 +62,15 @@ jobs:
     #     docker push $IMAGE_ID:$VERSION
     # - run: echo $HEROKU_APP_NAME
 
-    #Heroku Login
-    - name: Login to Heroku
-      run: echo "${{ secrets.HEROKU_API_KEY }}" | docker login --username=_ --password-stdin registry.heroku.com
+    # #Heroku Login
+    # - name: Login to Heroku
+    #   run: echo "${{ secrets.HEROKU_API_KEY }}" | docker login --username=_ --password-stdin registry.heroku.com
 
     #Pushing docker image to heroku
     - name: Deploy docker image
       # if: steps.stepBdi.outputs.status == 'success'
       run: |
+          echo "${{ secrets.HEROKU_API_KEY }}" | docker login --username=_ --password-stdin registry.heroku.com
           docker tag $HEROKU_APP_NAME registry.heroku.com/$HEROKU_APP_NAME/web
           docker push registry.heroku.com/$HEROKU_APP_NAME/web
           curl https://cli-assets.heroku.com/install.sh | sh
