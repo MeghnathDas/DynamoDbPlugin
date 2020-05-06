@@ -11,6 +11,7 @@ import { CategoriesComponent } from './features/categories/categories.component'
 import { NoteService } from './features/services';
 import { AddNoteComponent } from './features/notes/add-note/add-note.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BlockInteractionService, HttpInterceptorService } from './features/core';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       { path: 'categories', component: CategoriesComponent },
     ])
   ],
-  providers: [NoteService],
+  providers: [
+    NoteService,
+    BlockInteractionService,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [AddNoteComponent]
 })
